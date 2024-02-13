@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.utils import timezone
 
+from .manager import MyUserManager
+
 
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=255,unique=True)
@@ -14,6 +16,8 @@ class User(AbstractBaseUser):
                                  message="Неверный формат номера телефона")
     phone_number = models.CharField(validators=[phone_regex], max_length=12,
                                     null=True, blank=True)
+
+    objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
